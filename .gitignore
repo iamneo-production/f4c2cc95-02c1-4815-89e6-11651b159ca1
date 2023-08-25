@@ -1,2 +1,35 @@
 node_modules/
 done
+/.metadata/
+Multiplayer Trivia Game/.project
+Multiplayer Trivia Game/admin-service/.mvn/wrapper/maven-wrapper.jar
+Multiplayer Trivia Game/admin-service/.mvn/wrapper/maven-wrapper.properties
+Multiplayer Trivia Game/admin-service/mvnw
+Multiplayer Trivia Game/admin-service/mvnw.cmd
+Multiplayer Trivia Game/admin-service/.mvn/wrapper/maven-wrapper.jar
+Multiplayer Trivia Game/api-gateway/.mvn/wrapper/maven-wrapper.jar
+Multiplayer Trivia Game/api-gateway/.mvn/wrapper/maven-wrapper.properties
+Multiplayer Trivia Game/api-gateway/mvnw
+Multiplayer Trivia Game/api-gateway/mvnw.cmd
+Multiplayer Trivia Game/authentication-service-main/.mvn/wrapper/maven-wrapper.jar
+Multiplayer Trivia Game/authentication-service-main/.mvn/wrapper/maven-wrapper.properties
+Multiplayer Trivia Game/authentication-service-main/mvnw
+Multiplayer Trivia Game/authentication-service-main/mvnw.cmd
+Multiplayer Trivia Game/eureka-server/.mvn/wrapper/maven-wrapper.jar
+Multiplayer Trivia Game/eureka-server/.mvn/wrapper/maven-wrapper.properties
+Multiplayer Trivia Game/eureka-server/mvnw
+Multiplayer Trivia Game/eureka-server/mvnw.cmd
+Multiplayer Trivia Game/gameplay-mechanics-service/.mvn/wrapper/maven-wrapper.jar
+Multiplayer Trivia Game/gameplay-mechanics-service/.mvn/wrapper/maven-wrapper.properties
+Multiplayer Trivia Game/gameplay-mechanics-service/mvnw
+Multiplayer Trivia Game/gameplay-mechanics-service/mvnw.cmd
+Multiplayer Trivia Game/leaderboard-service/.mvn/wrapper/maven-wrapper.jar
+Multiplayer Trivia Game/leaderboard-service/.mvn/wrapper/maven-wrapper.properties
+Multiplayer Trivia Game/leaderboard-service/mvnw
+Multiplayer Trivia Game/leaderboard-service/mvnw.cmd
+Multiplayer Trivia Game/registration-service/.mvn/wrapper/maven-wrapper.jar
+Multiplayer Trivia Game/registration-service/.mvn/wrapper/maven-wrapper.properties
+Multiplayer Trivia Game/registration-service/mvnw
+Multiplayer Trivia Game/registration-service/mvnw.cmd
+Multiplayer Trivia Game/admin-service/.mvn/wrapper/maven-wrapper.jar
+Multiplayer Trivia Game/leaderboard-service/.mvn/wrapper/maven-wrapper.jar
