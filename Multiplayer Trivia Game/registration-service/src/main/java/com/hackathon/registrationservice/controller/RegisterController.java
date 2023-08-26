@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/regiseration")
+@RequestMapping("/registration")
 public class RegisterController {
 	@GetMapping()
     public String home(){
