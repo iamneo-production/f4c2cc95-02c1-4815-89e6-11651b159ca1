@@ -1,36 +1,25 @@
 package com.hackathon.authenticationservice.model;
 
-public class UserDetails {
 
-	private String useName;
+public class LoginRequest {
+	private String userName;
 	private String password;
-	private Role role;
 
-	public UserDetails() {
+	public LoginRequest() {
 		super();
 	}
 
-	public UserDetails(String name, String password, Role role) {
+	public LoginRequest(String name, String password) {
 		super();
-		this.useName = name;
+		this.userName = name;
 		this.password = password;
-		this.role = role;
 	}
-
-	public Role getRole() {
-		return role;
-	}
-
-	public void setRole(Role role) {
-		this.role = role;
-	}
-
 	public String getUserName() {
-		return useName;
+		return userName;
 	}
 
 	public void setUserName(String name) {
-		this.useName = name;
+		this.userName = name;
 	}
 
 	public String getPassword() {

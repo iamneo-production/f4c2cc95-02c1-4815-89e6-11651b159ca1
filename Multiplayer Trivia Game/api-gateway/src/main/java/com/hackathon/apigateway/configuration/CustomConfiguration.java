@@ -13,10 +13,10 @@ public class CustomConfiguration {
 	{
 		return builder.routes().
 				route(authenticationRoute->authenticationRoute.path("/authenticate/**").uri("lb://AUTHENTICATION-SERVICE")).
-				route(adminRoute->adminRoute.path("/questions/**").uri("lb://PATIENT-SERVICE")).
-				route(appointmentRoute->appointmentRoute.path("/appointment/**").uri("lb://APPOINTMENT-SERVICE")).
-				route(healthcareproviderRoute->healthcareproviderRoute.path("/doctors/**").uri("lb://HEALTHCARE-PROVIDER-SERVICE")).
-				route(authenticationRoute->authenticationRoute.path("/authenticate/**").uri("lb://AUTHENTICATION-SERVICE")).build();
+				route(adminRoute->adminRoute.path("/admin/**").uri("lb://ADMIN-SERVICE")).
+				route(registerRoute->registerRoute.path("/regiseration/**").uri("lb://REGISTRATION-SERVICE")).
+				route(gameplaymechanicsRoute->gameplaymechanicsRoute.path("/game/**").uri("lb://GAMEPLAY-MECHANICS-SERVICE")).
+				route(leaderboardRoute->leaderboardRoute.path("/leaderboard/**").uri("lb://LEADERBOARD-SERVICE")).build();
 	}
 
 }
