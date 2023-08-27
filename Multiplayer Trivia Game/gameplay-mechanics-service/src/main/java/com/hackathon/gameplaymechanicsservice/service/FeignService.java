@@ -20,7 +20,7 @@ public class FeignService {
 
     @Autowired
     private ScoreEntityRepo scoreEntityRepo;
-    public List<SinglePlayerEntity> getUserAllSingleScoresByID()
+    public List<SinglePlayerEntity> getUserAllSingleScoresByID(int userID)
     {
         //create feign client to get userID
         List<SinglePlayerEntity> scoreList =null;
@@ -33,7 +33,7 @@ public class FeignService {
 
     }
 
-    public List<ScoresEntity> getUserAllRoomScoresByUserID()
+    public List<ScoresEntity> getUserAllRoomScoresByUserID(int userID)
     {
         //create feign client to get userID
         List<ScoresEntity> scoreList =null;

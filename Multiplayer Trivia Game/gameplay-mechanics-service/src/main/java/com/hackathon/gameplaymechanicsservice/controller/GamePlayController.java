@@ -56,16 +56,16 @@ public class GamePlayController {
     @Autowired
     private FeignService feignService;
 
-    @GetMapping("/getAllSingleScores")
-    public List<SinglePlayerEntity> getUserAllSingleScoresByID()
+    @GetMapping("/getAllSingleScores/{playerId}")
+    public List<SinglePlayerEntity> getUserAllSingleScoresByID(@PathVariable int playerId)
     {
-       return feignService.getUserAllSingleScoresByID();
+       return feignService.getUserAllSingleScoresByID(playerId);
     }
 
-    @GetMapping("/getUserAllRoomScore")
-    public List<ScoresEntity> getUserAllRoomScoresByUserID()
+    @GetMapping("/getUserAllRoomScore/{playerId}")
+    public List<ScoresEntity> getUserAllRoomScoresByUserID(@PathVariable int playerId)
     {
-        return feignService.getUserAllRoomScoresByUserID();
+        return feignService.getUserAllRoomScoresByUserID(playerId);
     }
 
     @GetMapping("/getRoomScore/{roomID}")

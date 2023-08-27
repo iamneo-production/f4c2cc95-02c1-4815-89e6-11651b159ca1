@@ -29,5 +29,14 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<ErrorModel>(em, HttpStatus.INTERNAL_SERVER_ERROR);
 	
 	}
+	
+	@ExceptionHandler(RegisterationServiceException.class)
+	public ResponseEntity<ErrorModel> handleRegisterationServiceException(Exception ex)
+	{
+		ErrorModel em = new ErrorModel();
+		em.setErrorCode("ERROR103");
+		em.setErrorMessage(ex.getMessage());
+		return new ResponseEntity<ErrorModel>(em, HttpStatus.INTERNAL_SERVER_ERROR);	
+	}
 
 }

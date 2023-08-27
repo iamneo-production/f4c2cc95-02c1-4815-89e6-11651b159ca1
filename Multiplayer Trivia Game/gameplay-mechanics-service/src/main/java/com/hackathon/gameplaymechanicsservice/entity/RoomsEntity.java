@@ -4,8 +4,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
 
 @Entity
 public class RoomsEntity {

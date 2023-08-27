@@ -93,8 +93,6 @@ public class ScoreService {
     public String submitAnswers(int gameId, LinkedList<PlayerAnswerResponse> playerAnswerResponses)
     {
         //get userID by using feign client
-
-
 //        playerAnswerResponses.forEach( ans ->
 //        {
 //            //create a feign client to get answer of the question
