@@ -7,11 +7,15 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="gameplay-mechanics-service" />
+        <module name="authentication-service" />
+        <module name="admin-service" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="admin-service" options="-parameters" />
+      <module name="authentication-service" options="-parameters" />
       <module name="gameplay-mechanics-service" options="-parameters" />
     </option>
   </component>

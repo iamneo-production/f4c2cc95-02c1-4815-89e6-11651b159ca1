@@ -5,6 +5,7 @@ import java.util.Date;
 import org.springframework.stereotype.Service;
 
 import com.hackathon.authenticationservice.exception.JWTNotValidException;
+import com.hackathon.authenticationservice.model.Role;
 import com.hackathon.authenticationservice.model.UserDetails;
 
 import io.jsonwebtoken.Claims;
@@ -24,8 +25,9 @@ public class JwtUtil {
 		long expiryTime = milliTime + expiryDuration * 1000;
 		Date expiry = new Date(expiryTime);
 		// claims
-		Claims claims = Jwts.claims().setIssuer(user.getName()).setIssuedAt(date).setExpiration(expiry);
-		claims.put("name", user.getName());
+		Claims claims = Jwts.claims().setIssuer(user.getUserName()).setIssuedAt(date).setExpiration(expiry);
+		claims.put("name", user.getUserName());
+		claims.put("role",user.getRole());
 		// jwt with claims
 		return Jwts.builder().setClaims(claims).signWith(SignatureAlgorithm.HS512,secret).compact();
 	}
@@ -37,10 +39,42 @@ public class JwtUtil {
 		Jwts.parser().setSigningKey(secret).parseClaimsJws(authorization);
 		}
 		catch (Exception e) {
-			System.out.println("exception occurrred");
 			e.printStackTrace();
 			throw new JWTNotValidException();
 		}
+	}
+	
+	 
+    public String getNameFromToken(String token) {
+        Claims claims = null;
+        try {
+             claims = Jwts.parser()
+                     .setSigningKey(secret)
+                     .parseClaimsJws(token)
+                     .getBody();
+        }
+        catch(Exception e){
+			e.printStackTrace();
+			throw new JWTNotValidException();
+        }
+
+        return (String) claims.get("name");
+    }
+ // method for get role of user from token
+	public String getRoleFromToken(String token) {
+		Claims claims = null;
+        try {
+             claims = Jwts.parser()
+                    .setSigningKey(secret)
+                    .parseClaimsJws(token)
+                    .getBody();
+        }
+        catch(Exception e){
+			e.printStackTrace();
+			throw new JWTNotValidException();
+        }
+
+        return (String) claims.get("role");
 	}
 
 }

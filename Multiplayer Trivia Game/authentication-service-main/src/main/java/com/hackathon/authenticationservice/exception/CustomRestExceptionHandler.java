@@ -15,7 +15,7 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
 	public ResponseEntity<ErrorModel> handleUserNotFoundException(Exception ex)
 	{
 		ErrorModel em = new ErrorModel();
-		em.setErrorCode("ERR001");
+		em.setErrorCode("ERROR101");
 		em.setErrorMessage("Username or password is not valid");
 		return new ResponseEntity<ErrorModel>(em, HttpStatus.NOT_FOUND);	
 	}
@@ -24,7 +24,7 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
 	public ResponseEntity<ErrorModel> handleJwtNotValidException(Exception ex)
 	{
 		ErrorModel em = new ErrorModel();
-		em.setErrorCode("ERR002");
+		em.setErrorCode("ERROR102");
 		em.setErrorMessage("JWT token is not valid");
 		return new ResponseEntity<ErrorModel>(em, HttpStatus.INTERNAL_SERVER_ERROR);
 	
