@@ -56,18 +56,18 @@ public class LeaderboardService {
 		return roomScores;
 	}
 
-//	public List<ScoresEntity> getTopScores(String category,String level)
-//	{
-//		List<ScoresEntity> roomScores= gameplayMechanicsService.getAll();
-//		List<ScoresEntity> topScores=new ArrayList<>();
-//		for(ScoresEntity obj:roomScores)
-//		{
-//			if(obj.ge.equals(category) && obj.getLevel().equals(level))
-//			{
-//				topScores.add(obj);
-//			}
-//		}
-//		Collections.sort(topScores);
-//		return topScores;
-//	}
+	public List<SinglePlayerEntity> getTopScores(String category,String level)
+	{
+		List<SinglePlayerEntity> roomScores= gameplayMechanicsService.getAllsingle();
+		List<SinglePlayerEntity> topScores=new ArrayList<>();
+		for(SinglePlayerEntity obj:roomScores)
+		{
+			if(obj.getCateogry().equals(category) && obj.getLevel().equals(level))
+			{
+				topScores.add(obj);
+			}
+		}
+		Collections.sort(topScores);
+		return topScores;
+	}
 }

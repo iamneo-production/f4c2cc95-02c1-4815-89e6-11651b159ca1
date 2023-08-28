@@ -3,30 +3,26 @@ package com.hackathon.gameplaymechanicsservice.controller;
 import com.hackathon.gameplaymechanicsservice.entity.RoomsEntity;
 import com.hackathon.gameplaymechanicsservice.entity.ScoresEntity;
 import com.hackathon.gameplaymechanicsservice.entity.SinglePlayerEntity;
-import com.hackathon.gameplaymechanicsservice.feignclient.QuestionFeignClient;
-import com.hackathon.gameplaymechanicsservice.repository.ScoreEntityRepo;
+ import com.hackathon.gameplaymechanicsservice.repository.ScoreEntityRepo;
 import com.hackathon.gameplaymechanicsservice.repository.SinglePlayerEntityRepo;
 import com.hackathon.gameplaymechanicsservice.request.QuestionsRequest;
-import com.hackathon.gameplaymechanicsservice.response.ErrorModel;
-import com.hackathon.gameplaymechanicsservice.response.PlayerAnswerResponse;
+ import com.hackathon.gameplaymechanicsservice.response.PlayerAnswerResponse;
 import com.hackathon.gameplaymechanicsservice.response.Question1;
 import com.hackathon.gameplaymechanicsservice.service.FeignService;
 import com.hackathon.gameplaymechanicsservice.service.RoomService;
 import com.hackathon.gameplaymechanicsservice.service.ScoreService;
  import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.LinkedList;
+ import java.util.LinkedList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/quizAPI")
 public class GamePlayController {
 
-    int userId =0;
+
     @Autowired
     private RoomService roomService;
 
@@ -58,11 +54,6 @@ public class GamePlayController {
         return roomService.startGame(roomId,tokenDup);
     }
 
-//    public ResponseEntity<ErrorModel> getClientFallBack(@PathVariable("roomID") String roomId, Exception e) {
-//
-//        return ResponseEntity.status(HttpStatus.GONE).body(new ErrorModel("Error506", "quiz server is down please try later"));
-//
-//    }
 
     @GetMapping("/getRoomQuestions/{roomId}")
     public List<Question1> getRoomQuestions(@PathVariable("roomId") String roomId,@RequestHeader(name = "Authorization") String tokenDup)

@@ -20,7 +20,4 @@ public interface ScoreEntityRepo extends JpaRepository<ScoresEntity,String> {
                     "WHERE roomid = :roomId AND participantid = :playerId", nativeQuery = true)
      public Date findScoreAndTimeByRoomIdAndPlayerId(String roomId, int playerId);
 
-//    @Query(value = "UPDATE scores_entity SET final_score = :finalScore " +
-//            "WHERE roomid = :roomId AND participantid = :playerId", nativeQuery = true)
-//    public int updateFinalScore(String roomId, int playerId, int finalScore);
 }

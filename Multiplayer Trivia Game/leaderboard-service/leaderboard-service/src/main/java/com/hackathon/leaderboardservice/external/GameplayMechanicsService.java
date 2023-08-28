@@ -3,6 +3,7 @@ package com.hackathon.leaderboardservice.external;
 import java.util.List;
 
 import com.hackathon.leaderboardservice.model.ScoresEntity;
+import com.hackathon.leaderboardservice.model.SinglePlayerEntity;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +27,6 @@ public interface GameplayMechanicsService {
 	public List<ScoresEntity> getAll();
 
 	@GetMapping("/quizAPI/getallSingleData")
-	public List<ScoresEntity> getAllsingle();
+	public List<SinglePlayerEntity> getAllsingle();
 
 }

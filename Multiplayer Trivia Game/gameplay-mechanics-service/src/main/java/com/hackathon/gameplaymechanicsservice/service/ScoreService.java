@@ -60,13 +60,6 @@ public class ScoreService {
                 }
             });
 
-//        playerAnswerResponses.forEach( ans ->
-//        {
-//            //create a feign client to get answer of the question
-//            String correctAnswer =questionFeignClient.getQuestionAnswer(ans.getQuestionID());
-//            if (ans.getCorrectOption().equals(correctAnswer)) score++;
-//
-//        });
 
             int score = 10;
             int count = 0;
@@ -88,28 +81,16 @@ public class ScoreService {
 
 
             long timeInMillis1 = times.getTime();
-            System.out.println(timeInMillis1+"jjjjjjjjjjjjjjjjjjjjj");
-            long timeInMillis2 = new Date().getTime();
-            System.out.println(timeInMillis2+"jjjjjjjjjjjjjjjjjjjjj");
+             long timeInMillis2 = new Date().getTime();
 
             long millisecondsDifference = Math.abs(timeInMillis1 - timeInMillis2);
-            System.out.println(millisecondsDifference+"jjjjjjjjjjjjjjjjjjjjj");
 
-//        java.util.Date utilDate1 = new java.util.Date(startTime.getTime());
-//        java.util.Date utilDate2 = new java.util.Date(endTime.getTime());
-//
-//        // Calculate the time difference in milliseconds
-//        long millisecondsDifference = utilDate2.getTime() - utilDate1.getTime();
-
-            // Convert milliseconds to seconds
             int secondsDifference = (int) millisecondsDifference / 1000;
             double finalScore = (WEIGHT_POINTS * (double) score) - (WEIGHT_TIME * (double) secondsDifference);
-            System.out.println(finalScore+"jjjjjjjjjjjjjjjjjjjjj");
 
             List<ScoresEntity> scoresEntityMain = scoreEntityRepo.findByRoomID(roomId);
             for (ScoresEntity sc : scoresEntityMain) {
-                //scoresEntityMain.forEach( sc -> {
-                if (sc.getParticipantID() == userId) {
+                 if (sc.getParticipantID() == userId) {
                     sc.setFinalScore((int) finalScore);
                     sc.setNoOfCorrectAnswers(score);
                     scoreEntityRepo.save(sc);
@@ -117,7 +98,6 @@ public class ScoreService {
             }
             ;
 
-            // scoreEntityRepo.updateFinalScore(roomId,userId,(int)finalScore);
 
             roomsEntityRepo.findById(roomId).ifPresent(room -> {
                 room.setRoomStatus(RoomStatus.COMPLETED.toString());
@@ -167,21 +147,13 @@ public class ScoreService {
             long millisecondsDifference = Math.abs(timeInMillis1 - timeInMillis2);
 
 
-//        java.util.Date utilDate1 = new java.util.Date(startTime.getTime());
-//        java.util.Date utilDate2 = new java.util.Date(endTime.getTime());
-
-            // Calculate the time difference in milliseconds
-            //long millisecondsDifference = utilDate2.getTime() - utilDate1.getTime();
-
-            // Convert milliseconds to seconds
             int secondsDifference = (int) millisecondsDifference / 1000;
             double finalScore = (WEIGHT_POINTS * (double) score) - (WEIGHT_TIME * (double) secondsDifference);
 
-            // singlePlayerEntityRepo.updateFinalScore(gameId,userId,(int)finalScore);
-
+ 
             SinglePlayerEntity singleScoresEntityS = singlePlayerEntityRepo.findByGameID(gameId);
             singleScoresEntity.setScore((int) finalScore);
-            singleScoresEntity.setNoOfQuestions(score);
+            singleScoresEntity.setNoOfQuestions(count);
             singlePlayerEntityRepo.save(singleScoresEntity);
 
             return "your score is : " + (int) finalScore;

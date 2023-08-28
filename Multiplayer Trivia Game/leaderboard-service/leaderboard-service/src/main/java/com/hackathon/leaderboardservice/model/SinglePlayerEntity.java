@@ -5,7 +5,7 @@ package com.hackathon.leaderboardservice.model;
 import java.util.Date;
 
 
-public class SinglePlayerEntity {
+public class SinglePlayerEntity implements Comparable<SinglePlayerEntity>{
 
 
     private int gameID;
@@ -97,4 +97,10 @@ public class SinglePlayerEntity {
                 ", score=" + score +
                 '}';
     }
+
+    @Override
+    public int compareTo(SinglePlayerEntity other) {
+        return Integer.compare(other.getScore(), this.score);
+    }
+
 }

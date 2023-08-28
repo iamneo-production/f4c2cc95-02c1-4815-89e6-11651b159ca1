@@ -3,6 +3,7 @@ package com.hackathon.leaderboardservice.controller;
 import java.util.List;
 
 import com.hackathon.leaderboardservice.model.ScoresEntity;
+import com.hackathon.leaderboardservice.model.SinglePlayerEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,11 +37,11 @@ public class LeaderboardController {
 		return new ResponseEntity<List<ScoresEntity>>(leaderboardService.getRoomHistory(roomId), HttpStatus.OK);
 	}
 	
-//	@GetMapping("/getTopScores/{category}/{level}")
-//	public List<ScoresEntity> getTopScores(@PathVariable("category") String category, @PathVariable("level") String level)
-//	{
-//		return leaderboardService.getTopScores(category, level);
-//	}
+	@GetMapping("/getTopScores/{category}/{level}")
+	public List<SinglePlayerEntity> getTopScores(@PathVariable("category") String category, @PathVariable("level") String level)
+	{
+		return leaderboardService.getTopScores(category, level);
+	}
 	
 	
 	

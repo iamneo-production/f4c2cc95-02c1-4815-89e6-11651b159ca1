@@ -19,7 +19,4 @@ public interface SinglePlayerEntityRepo extends JpaRepository<SinglePlayerEntity
             "WHERE gameid = :gameId AND userid = :playerId", nativeQuery = true)
     public Date findScoreAndTimeByGameIdAndPlayerId(int gameId, int playerId);
 
-//    @Query(value = "UPDATE score_player_entity SET final_score = :finalScore " +
-//            "WHERE gameid = :gameId AND userid = :playerId", nativeQuery = true)
-//    public void updateFinalScore(int gameId, int playerId, int finalScore);
 }

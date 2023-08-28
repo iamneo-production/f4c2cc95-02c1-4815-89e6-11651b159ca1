@@ -44,11 +44,9 @@ public class RoomService {
 
         //create fiegn client to get user id
          int userId =  feignService.getUserIDFromToken(token);
-         System.out.println("user ------------id"+userId);
-        roomsEntity.setRoomOwnerID(userId);
+         roomsEntity.setRoomOwnerID(userId);
 
         roomsEntity.setRoomStatus(RoomStatus.CREATED.toString());
-        System.out.println("user 55555555555555 id"+roomsEntity.getRoomOwnerID());
 
         ArrayList<Integer> players = new ArrayList<>();
         players.add(userId);
@@ -86,8 +84,7 @@ public class RoomService {
 
         if (roomId==null)
             throw new InvalidRoomIDException("you have entered room id : "+roomId+" is invalid ,please enter valid roomId");
-            //return "you have entered room id : "+roomId+" is invalid ,please enter valid roomId";
-        else {
+         else {
             roomID=null;
             return "you have join in the room. the room owner will start the game...";
 
@@ -160,31 +157,12 @@ public class RoomService {
 
                     return ResponseEntity.ok(questions);
 
-
-                    //create a feign to get List of Question  from questions service
-//                List<Question> questions = questionFeignClient.getQuestions(questionsRequest);
-//                List<QuestionsResponse> questionsResponse = new LinkedList<>();
-//                questions.forEach( que ->
-//                {
-//                    QuestionsResponse q = new QuestionsResponse();
-//                    q.setQuestionID(que.getId());
-//                    q.setQuestion(que.getQuestion());
-//                    q.setOption1(que.getOpt1());
-//                    q.setOption2(que.getOpt2());
-//                    q.setOption3(que.getOpt3());
-//                    q.setOption4(que.getOpt4());
-//                    questionsResponse.add(q);
-//                });
-//
-//                return ResponseEntity.ok(questionsResponse);
                 } else
                     throw new InvalidRoomIDException("you have entered room id : " + roomId + " is invalid ,please enter valid roomId");
-                //return  ResponseEntity.ok("you have entered room id : "+roomId+" is invalid ,please enter valid roomId");
 
             } else {
                 roomID = null;
                 throw new NotRoomOwnerException("your are not the owner of room id : " + roomId);
-                //return ResponseEntity.ok("your are not the owner of room id : "+roomId+" please wait until the owner start the game ");
 
             }
 
@@ -197,8 +175,7 @@ public class RoomService {
         List<Question1> quest = roomIDQuestions.get(roomId);
         if(quest== null)
         {
-            //return null;
-            throw new InvalidRoomIDException("you have entered room id : "+roomId+" is invalid ,please enter valid roomId");
+             throw new InvalidRoomIDException("you have entered room id : "+roomId+" is invalid ,please enter valid roomId");
         }
         else
             return quest;
@@ -225,7 +202,6 @@ public class RoomService {
 
         singlePlayerEntityRepo.save(singlePlayerEntity);
 
-        System.out.println("---"+questionsRequest.getCategory()+"ggg"+questionsRequest.getLevel()+"  "+questionsRequest.getNoOFQuestions());
 
 
         List<Question1> questions = questionFeignClient.getListOfQuestions(
@@ -234,25 +210,10 @@ public class RoomService {
                 questionsRequest.getNoOFQuestions()
         );
 
-        System.out.println("size is :"+questions.size());
 
 
         return questions;
 
-//        List<Question> questions = questionFeignClient.getQuestions(questionsRequest);
-//        List<QuestionsResponse> questionsResponse = new LinkedList<>();
-//        questions.forEach( que ->
-//        {
-//            QuestionsResponse q = new QuestionsResponse();
-//            q.setQuestionID(que.getId());
-//            q.setQuestion(que.getQuestion());
-//            q.setOption1(que.getOpt1());
-//            q.setOption2(que.getOpt2());
-//            q.setOption3(que.getOpt3());
-//            q.setOption4(que.getOpt4());
-//            questionsResponse.add(q);
-//        });
-//    return questionsResponse;}
 
     }
 }

@@ -92,8 +92,7 @@ public class RegisterServiceImpl implements RegisterService{
 			throw new UserNameNotValidException();
 
 
-			//return ResponseEntity.status(HttpStatus.GONE).body(new ErrorModel("Error306", "server is down"));
-		}
+ gitgit 		}
 
 		return  new User();
 
