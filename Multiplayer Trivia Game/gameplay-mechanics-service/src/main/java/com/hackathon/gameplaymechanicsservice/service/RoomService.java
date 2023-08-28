@@ -154,7 +154,7 @@ public class RoomService {
                     );
 
                     roomIDQuestions.put(roomId, questions);
-
+                    Collections.shuffle(questions);
                     return ResponseEntity.ok(questions);
 
                 } else
@@ -178,7 +178,8 @@ public class RoomService {
              throw new InvalidRoomIDException("you have entered room id : "+roomId+" is invalid ,please enter valid roomId");
         }
         else
-            return quest;
+            Collections.shuffle(quest);
+        return quest;
 
 
     }
@@ -210,8 +211,7 @@ public class RoomService {
                 questionsRequest.getNoOFQuestions()
         );
 
-
-
+        Collections.shuffle(questions);
         return questions;
 
 

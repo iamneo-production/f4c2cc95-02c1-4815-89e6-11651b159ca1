@@ -1,5 +1,6 @@
 package com.hackathon.authenticationservice.service;
 
+import org.apache.catalina.LifecycleState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,7 @@ public class AuthenticationService {
 	}
 	
 	public String loginUserfalllback(LoginRequest user,Exception ex) {
+	//	List<UserDetails> user = new UserDetails();
 		log.error(ex.getMessage());
 		log.error(ex.getClass().toString());
 		throw new RegisterationServiceException(ex.getMessage());

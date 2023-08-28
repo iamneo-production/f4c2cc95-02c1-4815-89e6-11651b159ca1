@@ -24,7 +24,7 @@ public class GlobalCustomExceptionHandler extends ResponseEntityExceptionHandler
         ErrorModel em = new ErrorModel();
         em.setErrorCode("ERR502");
         em.setErrorMessage(ex.getMessage());
-        return new ResponseEntity<>(em, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(em, HttpStatus.NOT_ACCEPTABLE);
     }
 
     @ExceptionHandler( NotRoomOwnerException.class)
@@ -33,6 +33,19 @@ public class GlobalCustomExceptionHandler extends ResponseEntityExceptionHandler
         ErrorModel em = new ErrorModel();
         em.setErrorCode("ERR503");
         em.setErrorMessage(ex.getMessage());
-        return new ResponseEntity<>(em, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(em, HttpStatus.NOT_ACCEPTABLE);
     }
+
+
+    @ExceptionHandler( SubmissionException.class)
+    public ResponseEntity<ErrorModel> handleSubmitException(Exception ex)
+    {
+        ErrorModel em = new ErrorModel();
+        em.setErrorCode("ERR504");
+        em.setErrorMessage(ex.getMessage());
+        return new ResponseEntity<>(em, HttpStatus.ALREADY_REPORTED);
+    }
+
+
+
 }

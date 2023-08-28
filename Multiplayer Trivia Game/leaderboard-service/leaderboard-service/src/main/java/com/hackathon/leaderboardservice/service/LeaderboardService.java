@@ -53,6 +53,8 @@ public class LeaderboardService {
 		List<ScoresEntity> roomScores= gameplayMechanicsService.getRoomScoresHistory(roomId);
 		if(roomScores.isEmpty())
 			throw new NoGamePlayedException();
+
+		Collections.sort(roomScores);
 		return roomScores;
 	}
 

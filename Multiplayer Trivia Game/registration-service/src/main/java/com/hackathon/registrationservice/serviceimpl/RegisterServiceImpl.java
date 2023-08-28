@@ -91,8 +91,7 @@ public class RegisterServiceImpl implements RegisterService{
 		{
 			throw new UserNameNotValidException();
 
-
- gitgit 		}
+ 		}
 
 		return  new User();
 

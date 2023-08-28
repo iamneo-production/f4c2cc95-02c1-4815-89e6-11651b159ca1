@@ -6,6 +6,7 @@ import com.hackathon.gameplaymechanicsservice.entity.RoomsEntity;
 import com.hackathon.gameplaymechanicsservice.entity.ScoresEntity;
 import com.hackathon.gameplaymechanicsservice.entity.SinglePlayerEntity;
 import com.hackathon.gameplaymechanicsservice.exception.InvalidRoomIDException;
+import com.hackathon.gameplaymechanicsservice.exception.SubmissionException;
 import com.hackathon.gameplaymechanicsservice.repository.RoomsEntityRepo;
 import com.hackathon.gameplaymechanicsservice.repository.ScoreEntityRepo;
 import com.hackathon.gameplaymechanicsservice.feignclient.QuestionFeignClient;
@@ -46,11 +47,19 @@ public class ScoreService {
     public String submitAnswers(String roomId,LinkedList<PlayerAnswerResponse> playerAnswerResponses,String token)
     {
         RoomsEntity roomsEntity =  roomsEntityRepo.findById(roomId).get();
+
         if (roomsEntity.getRoomID()==null)
             throw new InvalidRoomIDException("you have entered room id : "+ roomId+" is invalid ,please enter valid roomId");
         else {
             //get userID by using feign client
             int userId =  feignService.getUserIDFromToken(token);
+
+            List<ScoresEntity> scoresEntityTemp = scoreEntityRepo.findByRoomID(roomId);
+            for (ScoresEntity sc : scoresEntityTemp) {
+                if (sc.getParticipantID() == userId && sc.getRoomID().equals(roomId) && sc.getEndTime()!= null) {
+                    throw new SubmissionException("you have already submitted the quiz ");
+                }
+            }
 
             List<ScoresEntity> scoresEntity = scoreEntityRepo.findByRoomID(roomId);
             scoresEntity.forEach(sc -> {
@@ -61,7 +70,7 @@ public class ScoreService {
             });
 
 
-            int score = 10;
+            int score = 0;
             int count = 0;
 
             LinkedList<Integer> qNumbers = new LinkedList<>();
@@ -72,7 +81,7 @@ public class ScoreService {
             HashMap<Integer, String> qAnswers = questionFeignClient.getQuestionAnswer(qNumbers);
             for (PlayerAnswerResponse obj : playerAnswerResponses) {
                 if (obj.getCorrectOption().equals(qAnswers.get(obj.getQuestionID()))) {
-                    score+=10;
+                    score++;
                     count++;
                 }
             }
@@ -86,17 +95,17 @@ public class ScoreService {
             long millisecondsDifference = Math.abs(timeInMillis1 - timeInMillis2);
 
             int secondsDifference = (int) millisecondsDifference / 1000;
-            double finalScore = (WEIGHT_POINTS * (double) score) - (WEIGHT_TIME * (double) secondsDifference);
+            double finalScore = Math.abs(WEIGHT_POINTS * (double) score) - ((WEIGHT_TIME/600) * (double) secondsDifference);
 
             List<ScoresEntity> scoresEntityMain = scoreEntityRepo.findByRoomID(roomId);
             for (ScoresEntity sc : scoresEntityMain) {
                  if (sc.getParticipantID() == userId) {
-                    sc.setFinalScore((int) finalScore);
-                    sc.setNoOfCorrectAnswers(score);
+                    sc.setFinalScore((int) finalScore*10);
+                    sc.setNoOfCorrectAnswers(count);
                     scoreEntityRepo.save(sc);
                 }
             }
-            ;
+
 
 
             roomsEntityRepo.findById(roomId).ifPresent(room -> {
@@ -115,7 +124,8 @@ public class ScoreService {
             throw new InvalidRoomIDException("you have entered game id : "+singlePlayerEntity.getgameID()+" is invalid ,please enter valid gameId");
         else {
 
-
+            if (singlePlayerEntity.getEndTime() !=null )
+                throw new SubmissionException("you have already submitted quiz");
 
             SinglePlayerEntity singleScoresEntity = singlePlayerEntityRepo.findByGameID(gameId);
             singleScoresEntity.setEndTime(new Date());
@@ -148,11 +158,11 @@ public class ScoreService {
 
 
             int secondsDifference = (int) millisecondsDifference / 1000;
-            double finalScore = (WEIGHT_POINTS * (double) score) - (WEIGHT_TIME * (double) secondsDifference);
+            double finalScore = Math.abs(WEIGHT_POINTS * (double) score) - ((WEIGHT_TIME/60) * (double) secondsDifference);
 
- 
+
             SinglePlayerEntity singleScoresEntityS = singlePlayerEntityRepo.findByGameID(gameId);
-            singleScoresEntity.setScore((int) finalScore);
+            singleScoresEntity.setScore((int) finalScore*10);
             singleScoresEntity.setNoOfQuestions(count);
             singlePlayerEntityRepo.save(singleScoresEntity);
 
