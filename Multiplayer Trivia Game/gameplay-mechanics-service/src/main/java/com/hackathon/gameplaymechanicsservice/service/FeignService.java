@@ -2,10 +2,15 @@ package com.hackathon.gameplaymechanicsservice.service;
 
 import com.hackathon.gameplaymechanicsservice.entity.ScoresEntity;
 import com.hackathon.gameplaymechanicsservice.entity.SinglePlayerEntity;
+//import com.hackathon.gameplaymechanicsservice.feignclient.AutencticationfeignClient;
+//import com.hackathon.gameplaymechanicsservice.feignclient.RegisterFeignClient;
+import com.hackathon.gameplaymechanicsservice.feignclient.AutencticationfeignClient;
+import com.hackathon.gameplaymechanicsservice.feignclient.RegisterFeignClient;
 import com.hackathon.gameplaymechanicsservice.repository.ScoreEntityRepo;
 import com.hackathon.gameplaymechanicsservice.repository.SinglePlayerEntityRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +62,20 @@ public class FeignService {
         }
         return scoreList;
 
+    }
+
+    @Autowired
+    private AutencticationfeignClient autencticationfeignClient;
+
+    @Autowired
+    private RegisterFeignClient registerFeignClient;
+
+    public int getUserIDFromToken(@RequestHeader(name = "Authorization" ) String tokenDup)
+    {
+        String userEmail = autencticationfeignClient.getUserMail(tokenDup);
+        System.out.println("user email "+userEmail);
+        int userid = registerFeignClient.getUserIdByEmail(userEmail);
+       return  userid;
     }
 
 

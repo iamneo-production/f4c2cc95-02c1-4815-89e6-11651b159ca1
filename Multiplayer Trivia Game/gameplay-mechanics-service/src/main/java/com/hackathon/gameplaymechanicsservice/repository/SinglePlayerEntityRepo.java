@@ -12,11 +12,14 @@ import java.util.List;
 public interface SinglePlayerEntityRepo extends JpaRepository<SinglePlayerEntity,Integer> {
 
     public List<SinglePlayerEntity> findByUserID(int userID);
-    @Query(value = "SELECT  start_time, end_time FROM score_player_entity " +
-            "WHERE gameid = :gameId AND userid = :playerId", nativeQuery = true)
-    public List<Date> findScoreAndTimeByGameIdAndPlayerId(int gameId, int playerId);
 
-    @Query(value = "UPDATE score_player_entity SET final_score = :finalScore " +
+    public SinglePlayerEntity findByGameID(int gameId);
+
+    @Query(value = "SELECT  start_time FROM single_player_entity " +
             "WHERE gameid = :gameId AND userid = :playerId", nativeQuery = true)
-    public void updateFinalScore(int gameId, int playerId, int finalScore);
+    public Date findScoreAndTimeByGameIdAndPlayerId(int gameId, int playerId);
+
+//    @Query(value = "UPDATE score_player_entity SET final_score = :finalScore " +
+//            "WHERE gameid = :gameId AND userid = :playerId", nativeQuery = true)
+//    public void updateFinalScore(int gameId, int playerId, int finalScore);
 }

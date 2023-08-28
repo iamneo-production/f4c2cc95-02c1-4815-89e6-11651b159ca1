@@ -3,7 +3,7 @@ package com.hackathon.gameplaymechanicsservice.response;
 public class Question1 {
 
 
-
+    private int id;
     private  String question_description;
 
     private  String opt1;
@@ -13,6 +13,14 @@ public class Question1 {
     private  String opt3;
 
     private  String opt4;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getQuestion_description() {
         return question_description;

@@ -3,14 +3,22 @@ package com.hackathon.gameplaymechanicsservice.controller;
 import com.hackathon.gameplaymechanicsservice.entity.RoomsEntity;
 import com.hackathon.gameplaymechanicsservice.entity.ScoresEntity;
 import com.hackathon.gameplaymechanicsservice.entity.SinglePlayerEntity;
+import com.hackathon.gameplaymechanicsservice.feignclient.QuestionFeignClient;
+import com.hackathon.gameplaymechanicsservice.repository.ScoreEntityRepo;
+import com.hackathon.gameplaymechanicsservice.repository.SinglePlayerEntityRepo;
+import com.hackathon.gameplaymechanicsservice.request.QuestionsRequest;
+import com.hackathon.gameplaymechanicsservice.response.ErrorModel;
 import com.hackathon.gameplaymechanicsservice.response.PlayerAnswerResponse;
+import com.hackathon.gameplaymechanicsservice.response.Question1;
 import com.hackathon.gameplaymechanicsservice.service.FeignService;
 import com.hackathon.gameplaymechanicsservice.service.RoomService;
 import com.hackathon.gameplaymechanicsservice.service.ScoreService;
-import org.springframework.beans.factory.annotation.Autowired;
+ import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -18,6 +26,7 @@ import java.util.List;
 @RequestMapping("/quizAPI")
 public class GamePlayController {
 
+    int userId =0;
     @Autowired
     private RoomService roomService;
 
@@ -25,35 +34,61 @@ public class GamePlayController {
     private ScoreService scoreService;
 
     @PostMapping("/createRoom")
-    private ResponseEntity<String> createRoom(@RequestBody RoomsEntity roomsEntity) {
+    private ResponseEntity<String> createRoom(@RequestBody RoomsEntity roomsEntity,@RequestHeader(name = "Authorization") String tokenDup) {
 
-       return roomService.createRoom(roomsEntity);
+       return roomService.createRoom(roomsEntity,tokenDup);
     }
 
     @GetMapping("/joinRoom/{roomID}")
-    public String joinRoom(@PathVariable("roomID") String roomId) {
-        return roomService.joinRoom(roomId);
+    public String joinRoom(@PathVariable("roomID") String roomId,@RequestHeader(name = "Authorization") String tokenDup) {
+        return roomService.joinRoom(roomId,tokenDup);
     }
 
     @GetMapping("/checkParticipants/{roomID}")
-    public String checkJoinParticipants(@PathVariable("roomID") String roomId)
+    public String checkJoinParticipants(@PathVariable("roomID") String roomId,@RequestHeader(name = "Authorization") String tokenDup)
     {
-        return roomService.checkJoinParticipants(roomId);
+        return roomService.checkJoinParticipants(roomId,tokenDup);
     }
 
+
     @GetMapping("/start/{roomID}")
-    public ResponseEntity<?> startGame(@PathVariable("roomID") String roomId)
+   // @CircuitBreaker(name = "gameplayMechanicsServiceBreaker",fallbackMethod ="getClientFallBack" )
+    public ResponseEntity<?> startGame(@PathVariable("roomID") String roomId,@RequestHeader(name = "Authorization") String tokenDup)
     {
-        return roomService.startGame(roomId);
+        return roomService.startGame(roomId,tokenDup);
+    }
+
+//    public ResponseEntity<ErrorModel> getClientFallBack(@PathVariable("roomID") String roomId, Exception e) {
+//
+//        return ResponseEntity.status(HttpStatus.GONE).body(new ErrorModel("Error506", "quiz server is down please try later"));
+//
+//    }
+
+    @GetMapping("/getRoomQuestions/{roomId}")
+    public List<Question1> getRoomQuestions(@PathVariable("roomId") String roomId,@RequestHeader(name = "Authorization") String tokenDup)
+    {
+        return roomService.getRoomIDQuestions(roomId,tokenDup);
+
     }
 
     @PostMapping("/submit/{roomId}")
-    public String submitAnswers(@PathVariable("roomId") String roomId,@RequestBody LinkedList<PlayerAnswerResponse> playerAnswerResponses)
+    public String submitAnswers(@PathVariable("roomId") String roomId,@RequestBody LinkedList<PlayerAnswerResponse> playerAnswerResponses,@RequestHeader(name = "Authorization") String tokenDup)
     {
-        return scoreService.submitAnswers(roomId,playerAnswerResponses);
+        return scoreService.submitAnswers(roomId,playerAnswerResponses,tokenDup);
     }
 
-    @Autowired
+    @PostMapping("/startSinglePlayerGame")
+    public List<Question1> startGame(@RequestBody QuestionsRequest questionsRequest,@RequestHeader(name = "Authorization") String tokenDup) {
+        return roomService.startGame(questionsRequest,tokenDup);
+    }
+
+    @PostMapping("submitAnswers/{gameId}")
+    public String submitAnswers(@PathVariable("gameId") int gameId, @RequestBody LinkedList<PlayerAnswerResponse> playerAnswerResponses,@RequestHeader(name = "Authorization") String tokenDup)
+    {
+        return scoreService.submitAnswers(gameId,playerAnswerResponses,tokenDup);
+    }
+
+        @Autowired
     private FeignService feignService;
 
     @GetMapping("/getAllSingleScores/{playerId}")
@@ -72,6 +107,22 @@ public class GamePlayController {
     public List<ScoresEntity> getRoomScoresByID(@PathVariable("roomID") String roomID) {
 
         return feignService.getRoomScoresByID(roomID);
+    }
+
+    @Autowired
+    private ScoreEntityRepo scoreEntityRepo;
+    @Autowired
+    private SinglePlayerEntityRepo singlePlayerEntityRepo;
+
+    @GetMapping("/getallData")
+    public List<ScoresEntity> getAll()
+    {
+        return scoreEntityRepo.findAll();
+    }
+
+    @GetMapping("/quizAPI/getallSingleData")
+    public List<SinglePlayerEntity> getAllsingle(){
+        return singlePlayerEntityRepo.findAll();
     }
 
 }

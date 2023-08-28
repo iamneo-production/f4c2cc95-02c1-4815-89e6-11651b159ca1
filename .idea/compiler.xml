@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="config-server" />
+        <module name="iamneo-production_f4c2cc95-02c1-4815-89e6-11651b159ca1" />
+        <module name="authentication-service" />
+        <module name="api-gateway" />
+        <module name="registration-service" />
+        <module name="gameplay-mechanics-service" />
+        <module name="eureka-server" />
+        <module name="admin-service" />
+        <module name="leaderboard-service" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="admin-service" options="-parameters" />
+      <module name="api-gateway" options="-parameters" />
+      <module name="authentication-service" options="-parameters" />
+      <module name="config-server" options="-parameters" />
+      <module name="eureka-server" options="-parameters" />
+      <module name="gameplay-mechanics-service" options="-parameters" />
+      <module name="leaderboard-service" options="-parameters" />
+      <module name="registration-service" options="-parameters" />
+    </option>
+  </component>
+</project>

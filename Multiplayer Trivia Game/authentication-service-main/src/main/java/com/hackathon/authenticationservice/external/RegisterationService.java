@@ -7,7 +7,7 @@ import com.hackathon.authenticationservice.model.LoginRequest;
 import com.hackathon.authenticationservice.model.Role;
 
 
-@FeignClient("REGISTERATION-SERVICE")
+@FeignClient("REGISTRATION-SERVICE")
 public interface RegisterationService {
 	
 	@PostMapping("/registration/login")
