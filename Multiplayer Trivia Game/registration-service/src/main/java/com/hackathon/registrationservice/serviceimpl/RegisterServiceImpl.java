@@ -3,13 +3,10 @@ package com.hackathon.registrationservice.serviceimpl;
 import java.util.List;
 import java.util.Optional;
 
-import com.hackathon.registrationservice.entity.ErrorModel;
 import com.hackathon.registrationservice.entity.Role;
 import com.hackathon.registrationservice.exception.EmailDuplicateException;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.hackathon.registrationservice.entity.LoginRequest;
@@ -39,7 +36,8 @@ public class RegisterServiceImpl implements RegisterService{
 			else {
 				if (user.getUserName().matches("^[a-zA-Z0-9_]{3,20}$")) {
 
-
+					log.info("User saved : "+ user.getEmail() );
+					user.setRole(Role.PLAYER);
 					return registerRepository.save(user);
 				}
 				else throw new UserNameNotValidException();

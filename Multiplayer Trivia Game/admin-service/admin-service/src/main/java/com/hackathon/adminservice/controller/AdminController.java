@@ -16,9 +16,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.Job;
-import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.JobParametersInvalidException;
@@ -26,7 +24,6 @@ import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
 import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
 import org.springframework.batch.core.repository.JobRestartException;
-import com.hackathon.adminservice.dto.ErrorModel;
 import com.hackathon.adminservice.dto.Question1;
 import com.hackathon.adminservice.entity.Question;
 import com.hackathon.adminservice.externalservice.AuthenticationExternalService;
@@ -46,20 +43,18 @@ public class AdminController {
 
 	@PostMapping("/questions")
 	@CircuitBreaker(name = "clientBreaker", fallbackMethod = "getClientFallBack")
-	public ResponseEntity<?> addQuestion(@RequestBody Question question,
+	public ResponseEntity<String> addQuestion(@RequestBody Question question,
 			@RequestHeader(name = "Authorization") String tokenDup) {
 		String role = authenticationfeignclient.getRole(tokenDup);
-		if (role.equals("PLAYER")) {
-			return ResponseEntity.status(HttpStatus.OK).body(question);
-		} else {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND)
-					.body(new ErrorModel("Error305", "User can't add questions"));
+		if (role.equals("ADMIN")) {
+			return ResponseEntity.status(HttpStatus.OK).body("Question added");
 		}
+		return null; 
 	}
 
-	public ResponseEntity<ErrorModel> getClientFallBack(@RequestBody Question question,
+	public ResponseEntity<String> getClientFallBack(@RequestBody Question question,
 			@RequestHeader(name = "Authorization") String tokenDup, Exception e) {
-		return ResponseEntity.status(HttpStatus.GONE).body(new ErrorModel("Error306", "server is down"));
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Reach Support Team");
 	}
 
 	@GetMapping("/questions")

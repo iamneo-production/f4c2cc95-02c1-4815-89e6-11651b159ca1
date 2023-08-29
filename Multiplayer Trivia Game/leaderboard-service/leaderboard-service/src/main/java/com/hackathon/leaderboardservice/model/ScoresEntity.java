@@ -94,6 +94,18 @@ public class ScoresEntity implements Comparable<ScoresEntity> {
     public int compareTo(ScoresEntity other) {
         return Integer.compare(other.finalScore, this.finalScore);
     }
+    public ScoresEntity() {}
+	public ScoresEntity(int serialNo, String roomID, int participantID, int noOfCorrectAnswers, Date startTime,
+			Date endTime, int finalScore) {
+		super();
+		this.serialNo = serialNo;
+		this.roomID = roomID;
+		this.participantID = participantID;
+		this.noOfCorrectAnswers = noOfCorrectAnswers;
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.finalScore = finalScore;
+	}
 
 
 

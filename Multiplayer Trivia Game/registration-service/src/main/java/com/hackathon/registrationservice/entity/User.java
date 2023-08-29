@@ -1,9 +1,6 @@
 package com.hackathon.registrationservice.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class User {
@@ -30,6 +27,7 @@ public class User {
 	@Column(name = "PASSWORD")
 	private String password;
 	@Column(name = "ROLE")
+	@Enumerated(EnumType.STRING)
 	private Role role;
 	
 	public User() {

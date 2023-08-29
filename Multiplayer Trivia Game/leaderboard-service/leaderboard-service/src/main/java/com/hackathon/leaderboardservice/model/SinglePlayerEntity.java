@@ -1,7 +1,6 @@
 package com.hackathon.leaderboardservice.model;
 
 
-
 import java.util.Date;
 
 
@@ -100,7 +99,6 @@ public class SinglePlayerEntity implements Comparable<SinglePlayerEntity>{
 
     @Override
     public int compareTo(SinglePlayerEntity other) {
-        return Integer.compare(other.getScore(), this.score);
+        return Integer.compare(other.getScore(), this.getScore());
     }
-
 }

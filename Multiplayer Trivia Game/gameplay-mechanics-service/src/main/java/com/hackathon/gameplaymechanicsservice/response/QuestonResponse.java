@@ -4,8 +4,9 @@ import java.util.List;
 
 public class QuestonResponse {
 
+    private String gameIDReponse;
    private List<Question1> que;
-   private String gameIDReponse;
+
 
     public List<Question1> getQue() {
         return que;

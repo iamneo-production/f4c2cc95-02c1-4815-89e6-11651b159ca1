@@ -12,7 +12,7 @@ import com.hackathon.gameplaymechanicsservice.repository.ScoreEntityRepo;
 import com.hackathon.gameplaymechanicsservice.feignclient.QuestionFeignClient;
 import com.hackathon.gameplaymechanicsservice.repository.SinglePlayerEntityRepo;
 import com.hackathon.gameplaymechanicsservice.response.PlayerAnswerResponse;
- import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -24,150 +24,143 @@ import java.util.List;
 @Service
 public class ScoreService {
 
-    @Autowired
-    private ScoreEntityRepo scoreEntityRepo;
+	@Autowired
+	private ScoreEntityRepo scoreEntityRepo;
 
-    @Autowired
-    private RoomsEntityRepo roomsEntityRepo;
+	@Autowired
+	private RoomsEntityRepo roomsEntityRepo;
 
-    @Autowired
-    private QuestionFeignClient questionFeignClient;
+	@Autowired
+	private QuestionFeignClient questionFeignClient;
 
-    @Autowired
-    private SinglePlayerEntityRepo singlePlayerEntityRepo;
+	@Autowired
+	private SinglePlayerEntityRepo singlePlayerEntityRepo;
 
+	private static final double WEIGHT_POINTS = 0.7;
+	private static final double WEIGHT_TIME = 0.3;
 
+	@Autowired
+	private FeignService feignService;
+	String roomIDL = null;
 
-    private static final double WEIGHT_POINTS = 0.7;
-    private static final double WEIGHT_TIME = 0.3;
+	public String submitAnswers(String roomId, LinkedList<PlayerAnswerResponse> playerAnswerResponses, String token) {
+		RoomsEntity roomsEntity = roomsEntityRepo.findById(roomId).get();
 
-    @Autowired
-    private FeignService feignService;
-    String roomIDL=null;
-    public String submitAnswers(String roomId,LinkedList<PlayerAnswerResponse> playerAnswerResponses,String token)
-    {
-        RoomsEntity roomsEntity =  roomsEntityRepo.findById(roomId).get();
+		if (roomsEntity.getRoomID() == null)
+			throw new InvalidRoomIDException(
+					"you have entered room id : " + roomId + " is invalid ,please enter valid roomId");
+		else {
+			// get userID by using feign client
+			int userId = feignService.getUserIDFromToken(token);
 
-        if (roomsEntity.getRoomID()==null)
-            throw new InvalidRoomIDException("you have entered room id : "+ roomId+" is invalid ,please enter valid roomId");
-        else {
-            //get userID by using feign client
-            int userId =  feignService.getUserIDFromToken(token);
+			List<ScoresEntity> scoresEntityTemp = scoreEntityRepo.findByRoomID(roomId);
+			for (ScoresEntity sc : scoresEntityTemp) {
+				if (sc.getParticipantID() == userId && sc.getRoomID().equals(roomId) && sc.getEndTime() != null) {
+					throw new SubmissionException("you have already submitted the quiz ");
+				}
+			}
 
-            List<ScoresEntity> scoresEntityTemp = scoreEntityRepo.findByRoomID(roomId);
-            for (ScoresEntity sc : scoresEntityTemp) {
-                if (sc.getParticipantID() == userId && sc.getRoomID().equals(roomId) && sc.getEndTime()!= null) {
-                    throw new SubmissionException("you have already submitted the quiz ");
-                }
-            }
+			List<ScoresEntity> scoresEntity = scoreEntityRepo.findByRoomID(roomId);
+			scoresEntity.forEach(sc -> {
+				if (sc.getParticipantID() == userId) {
+					sc.setEndTime(new Date());
+					scoreEntityRepo.save(sc);
+				}
+			});
 
-            List<ScoresEntity> scoresEntity = scoreEntityRepo.findByRoomID(roomId);
-            scoresEntity.forEach(sc -> {
-                if (sc.getParticipantID() == userId) {
-                    sc.setEndTime(new Date());
-                    scoreEntityRepo.save(sc);
-                }
-            });
+			int score = 0;
+			int count = 0;
 
+			LinkedList<Integer> qNumbers = new LinkedList<>();
+			for (PlayerAnswerResponse obj : playerAnswerResponses) {
+				qNumbers.add(obj.getQuestionID());
+			}
 
-            int score = 0;
-            int count = 0;
+			HashMap<Integer, String> qAnswers = questionFeignClient.getQuestionAnswer(qNumbers);
+			for (PlayerAnswerResponse obj : playerAnswerResponses) {
+				if (obj.getCorrectOption().equals(qAnswers.get(obj.getQuestionID()))) {
+					score++;
+					count++;
+				}
+			}
 
-            LinkedList<Integer> qNumbers = new LinkedList<>();
-            for (PlayerAnswerResponse obj : playerAnswerResponses) {
-                qNumbers.add(obj.getQuestionID());
-            }
+			Date times = scoreEntityRepo.findScoreAndTimeByRoomIdAndPlayerId(roomId, userId);
 
-            HashMap<Integer, String> qAnswers = questionFeignClient.getQuestionAnswer(qNumbers);
-            for (PlayerAnswerResponse obj : playerAnswerResponses) {
-                if (obj.getCorrectOption().equals(qAnswers.get(obj.getQuestionID()))) {
-                    score++;
-                    count++;
-                }
-            }
+			long timeInMillis1 = times.getTime();
+			long timeInMillis2 = new Date().getTime();
 
-            Date times = scoreEntityRepo.findScoreAndTimeByRoomIdAndPlayerId(roomId, userId);
+			long millisecondsDifference = Math.abs(timeInMillis1 - timeInMillis2);
 
+			int secondsDifference = (int) millisecondsDifference / 1000;
+			double finalScore = Math.abs(WEIGHT_POINTS * 10* (double) score)
+					- ((WEIGHT_TIME / 3600) * (double) secondsDifference);
 
-            long timeInMillis1 = times.getTime();
-             long timeInMillis2 = new Date().getTime();
+			List<ScoresEntity> scoresEntityMain = scoreEntityRepo.findByRoomID(roomId);
+			for (ScoresEntity sc : scoresEntityMain) {
+				if (sc.getParticipantID() == userId) {
+					sc.setFinalScore((int) finalScore );
+					sc.setNoOfCorrectAnswers(count);
+					scoreEntityRepo.save(sc);
+				}
+			}
 
-            long millisecondsDifference = Math.abs(timeInMillis1 - timeInMillis2);
+			roomsEntityRepo.findById(roomId).ifPresent(room -> {
+				room.setRoomStatus(RoomStatus.COMPLETED.toString());
+			});
 
-            int secondsDifference = (int) millisecondsDifference / 1000;
-            double finalScore = Math.abs(WEIGHT_POINTS * (double) score) - ((WEIGHT_TIME/600) * (double) secondsDifference);
+			return "your score is : " + (int) finalScore;
+		}
 
-            List<ScoresEntity> scoresEntityMain = scoreEntityRepo.findByRoomID(roomId);
-            for (ScoresEntity sc : scoresEntityMain) {
-                 if (sc.getParticipantID() == userId) {
-                    sc.setFinalScore((int) finalScore*10);
-                    sc.setNoOfCorrectAnswers(count);
-                    scoreEntityRepo.save(sc);
-                }
-            }
+	}
 
+	public String submitAnswers(int gameId, LinkedList<PlayerAnswerResponse> playerAnswerResponses, String token) {
+		SinglePlayerEntity singlePlayerEntity = singlePlayerEntityRepo.findByGameID(gameId);
+		if (singlePlayerEntity.getgameID() < 1)
+			throw new InvalidRoomIDException("you have entered game id : " + singlePlayerEntity.getgameID()
+					+ " is invalid ,please enter valid gameId");
+		else {
 
+			if (singlePlayerEntity.getEndTime() != null)
+				throw new SubmissionException("you have already submitted quiz");
 
-            roomsEntityRepo.findById(roomId).ifPresent(room -> {
-                room.setRoomStatus(RoomStatus.COMPLETED.toString());
-            });
+			SinglePlayerEntity singleScoresEntity = singlePlayerEntityRepo.findByGameID(gameId);
+			singleScoresEntity.setEndTime(new Date());
+			singlePlayerEntityRepo.save(singleScoresEntity);
 
-            return "your score is : " + (int) finalScore;
-        }
+			int score = 0;
+			int count = 0;
 
-    }
+			LinkedList<Integer> qNumbers = new LinkedList<>();
+			for (PlayerAnswerResponse obj : playerAnswerResponses) {
+				qNumbers.add(obj.getQuestionID());
+			}
 
-    public String submitAnswers(int gameId, LinkedList<PlayerAnswerResponse> playerAnswerResponses,String token)
-    {
-        SinglePlayerEntity singlePlayerEntity = singlePlayerEntityRepo.findByGameID(gameId);
-        if ( singlePlayerEntity.getgameID() < 1 )
-            throw new InvalidRoomIDException("you have entered game id : "+singlePlayerEntity.getgameID()+" is invalid ,please enter valid gameId");
-        else {
+			HashMap<Integer, String> qAnswers = questionFeignClient.getQuestionAnswer(qNumbers);
+			for (PlayerAnswerResponse obj : playerAnswerResponses) {
+				if (obj.getCorrectOption().equals(qAnswers.get(obj.getQuestionID()))) {
+					score++;
+					count++;
+				}
+			}
+			int userId = feignService.getUserIDFromToken(token);
 
-            if (singlePlayerEntity.getEndTime() !=null )
-                throw new SubmissionException("you have already submitted quiz");
+			Date times = singlePlayerEntityRepo.findScoreAndTimeByGameIdAndPlayerId(gameId, userId);
+			// System.out.println("size:"+times.size());
 
-            SinglePlayerEntity singleScoresEntity = singlePlayerEntityRepo.findByGameID(gameId);
-            singleScoresEntity.setEndTime(new Date());
-            singlePlayerEntityRepo.save(singleScoresEntity);
+			long timeInMillis1 = times.getTime();
+			long timeInMillis2 = new Date().getTime();
+			long millisecondsDifference = Math.abs(timeInMillis1 - timeInMillis2);
 
-            int score = 0;
-            int count = 0;
+			int secondsDifference = (int) millisecondsDifference / 1000;
+			double finalScore = Math.abs(WEIGHT_POINTS * 10 * (double) score)
+					- ((WEIGHT_TIME / 60) * (double) secondsDifference);
 
-            LinkedList<Integer> qNumbers = new LinkedList<>();
-            for (PlayerAnswerResponse obj : playerAnswerResponses) {
-                qNumbers.add(obj.getQuestionID());
-            }
+			SinglePlayerEntity singleScoresEntityS = singlePlayerEntityRepo.findByGameID(gameId);
+			singleScoresEntity.setScore((int) finalScore );
+			singleScoresEntity.setNoOfQuestions(count);
+			singlePlayerEntityRepo.save(singleScoresEntity);
 
-            HashMap<Integer, String> qAnswers = questionFeignClient.getQuestionAnswer(qNumbers);
-            for (PlayerAnswerResponse obj : playerAnswerResponses) {
-                if (obj.getCorrectOption().equals(qAnswers.get(obj.getQuestionID()))) {
-                    score++;
-                    count++;
-                }
-            }
-            int userId =  feignService.getUserIDFromToken(token);
-
-            Date times = singlePlayerEntityRepo.findScoreAndTimeByGameIdAndPlayerId(gameId, userId);
-            //System.out.println("size:"+times.size());
-
-
-            long timeInMillis1 = times.getTime();
-            long timeInMillis2 = new Date().getTime();
-            long millisecondsDifference = Math.abs(timeInMillis1 - timeInMillis2);
-
-
-            int secondsDifference = (int) millisecondsDifference / 1000;
-            double finalScore = Math.abs(WEIGHT_POINTS * (double) score) - ((WEIGHT_TIME/60) * (double) secondsDifference);
-
-
-            SinglePlayerEntity singleScoresEntityS = singlePlayerEntityRepo.findByGameID(gameId);
-            singleScoresEntity.setScore((int) finalScore*10);
-            singleScoresEntity.setNoOfQuestions(count);
-            singlePlayerEntityRepo.save(singleScoresEntity);
-
-            return "your score is : " + (int) finalScore;
-        }
-    }
+			return "your score is : " + (int) finalScore;
+		}
+	}
 }
-

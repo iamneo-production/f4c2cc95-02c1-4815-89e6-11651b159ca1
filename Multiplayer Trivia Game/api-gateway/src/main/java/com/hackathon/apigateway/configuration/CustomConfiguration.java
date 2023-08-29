@@ -17,7 +17,7 @@ public class CustomConfiguration {
 				route(authenticationRoute->authenticationRoute.path("/authenticate/**").uri("lb://AUTHENTICATION-SERVICE")).
 				route(adminRoute->adminRoute.path("/admin/**").uri("lb://ADMIN-SERVICE")).
 				route(registerRoute->registerRoute.path("/registration/**").uri("lb://REGISTRATION-SERVICE")).
-				route(gameplaymechanicsRoute->gameplaymechanicsRoute.path("/gameAPI/**").uri("lb://GAMEPLAY-MECHANICS-SERVICE")).
+				route(gameplaymechanicsRoute->gameplaymechanicsRoute.path("/quizAPI/**").uri("lb://GAMEPLAY-MECHANICS-SERVICE")).
 				route(leaderboardRoute->leaderboardRoute.path("/leaderboard/**").uri("lb://LEADERBOARD-SERVICE")).build();
 	}
 

@@ -2,6 +2,7 @@ package com.hackathon.leaderboardservice.controller;
 
 import java.util.List;
 
+import com.hackathon.leaderboardservice.model.PlayersHistory;
 import com.hackathon.leaderboardservice.model.ScoresEntity;
 import com.hackathon.leaderboardservice.model.SinglePlayerEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.hackathon.leaderboardservice.model.RoomScore;
 import com.hackathon.leaderboardservice.service.LeaderboardService;
 
 @RestController
@@ -26,9 +26,9 @@ public class LeaderboardController {
     public String home(){
         return "Home leaderboardservice";
     }
-	
+//	http://localhost:9092/leaderboard/history?playerId=1  for fallback keep gameDown
 	@GetMapping("/history")
-	public ResponseEntity<?> getPlayerHistory(@RequestParam("playerId") Integer playerId){
+	public ResponseEntity<PlayersHistory> getPlayerHistory(@RequestParam("playerId") Integer playerId){
 		return leaderboardService.getPlayerHistory(playerId);
 	}
 	

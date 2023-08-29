@@ -34,6 +34,8 @@ public class FeignService {
             scoreList = new ArrayList<>();
             return scoreList;
         }
+        System.out.println(scoreList.size()+"rrrrrrrr");
+
         return scoreList;
 
     }

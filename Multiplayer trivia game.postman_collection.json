@@ -1,0 +1,655 @@
+{
+	"info": {
+		"_postman_id": "2492e26b-7855-4e6b-a619-a2a692c29a25",
+		"name": "Multiplayer trivia game",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "registration -service",
+			"item": [
+				{
+					"name": "admin login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\":\"banti\",\t \r\n    \"password\": \"SAI@abc123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8181/authenticate/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"authenticate",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\":\"banti\",\r\n\t\"name\":\"ganesh\" ,\r\n    \"password\": \"SAI@abc123\",\r\n    \"email\":\"banti@gmail.com\",\r\n\t\"role\" : \"PLAYER\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8181/registration/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"registration",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\":\"banti\",\t \r\n    \"password\": \"SAI@abc123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8181/authenticate/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"authenticate",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\":\"nani\",\t \r\n    \"password\": \"SAI@abc123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8181/authenticate/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"authenticate",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login3",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\":\"manoj\",\t \r\n    \"password\": \"SAI@abc123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8181/authenticate/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"authenticate",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login 4",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\":\"banti\",\t \r\n    \"password\": \"SAI@abc123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8181/authenticate/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"authenticate",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login 5",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\":\"banti\",\t \r\n    \"password\": \"SAI@abc123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8181/authenticate/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"authenticate",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "admin-service",
+			"item": [
+				{
+					"name": "post question",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n    \"category\":\"MOVIE\",\r\n\r\n    \"level\":\"EASY\",\r\n\r\n    \"questionDescription\":\"How many movies balayya acted?\",\r\n\r\n    \"opt1\":\"50\",\r\n\r\n    \"opt2\":\"almost 100\",\r\n\r\n    \"opt3\":\"almost 110\",\r\n\r\n    \"opt4\":\"almost 200\",\r\n\r\n    \"correctAnswer\":\"almost 110\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9095/admin/questions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9095",
+							"path": [
+								"admin",
+								"questions"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "game-play-service",
+			"item": [
+				{
+					"name": "single player game",
+					"item": [
+						{
+							"name": "start",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJiYW50aSIsImlhdCI6MTY5MzI4MTU2MywiZXhwIjoxNjkzMjg1MTYzLCJuYW1lIjoiYmFudGkiLCJyb2xlIjoiUExBWUVSIn0.IWXoLuwG7WbgyAhPysiz-ENxMpL9DXVMdCPRuRLuZqhe_v0_xZBmEJbT56LJ3bkYhQ2Y22ddBWQwp0fZeGz7Zw",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"category\":\"MOVIE\",\r\n    \"level\":\"EASY\",\r\n    \"noOfQuestions\":2  \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9093/quizAPI/startSinglePlayerGame",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9093",
+									"path": [
+										"quizAPI",
+										"startSinglePlayerGame"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "submit answers",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJuYXZlZW4iLCJpYXQiOjE2OTMzMTAxNTEsImV4cCI6MTY5MzMxMzc1MSwibmFtZSI6Im5hdmVlbiIsInJvbGUiOiJQTEFZRVIifQ.CZor8JqWHUaLYGUd8_MnP2jdIxj8oh7CciTMLeqbpBcox9WUVFl6-VUeqEa1aYUn-2aPgUIz0O0FziD9kghZow",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "[\r\n    {\r\n        \"questionID\":52 ,\r\n        \"correctOption\":\"svp\"\r\n    },\r\n    {\r\n        \"questionID\":53 ,\r\n        \"correctOption\":\"almost 150\"\r\n    }\r\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8181/quizAPI/submitAnswers/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8181",
+									"path": [
+										"quizAPI",
+										"submitAnswers",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "create room",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"category\":\"MOVIE\",\r\n    \"level\":\"EASY\",\r\n    \"noOfQuestions\":2,\r\n    \"noOfParticipants\":5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8181/quizAPI/createRoom",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"quizAPI",
+								"createRoom"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "joinroom2",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJuYW5pIiwiaWF0IjoxNjkzMjI0ODQ1LCJleHAiOjE2OTMyMjg0NDUsIm5hbWUiOiJuYW5pIiwicm9sZSI6IlBMQVlFUiJ9.MZFNxiHLKABhMc7Fzyy8Qck9kPNneXYxKOb6XWwr2QI1mzqEI2mupdNC8T3luVPkeX-N6eJ-9Vh-Ug4Rojbbnw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9093/quizAPI/joinRoom/bb948871-c6b3-456e-8d74-5e91b3c96283",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9093",
+							"path": [
+								"quizAPI",
+								"joinRoom",
+								"bb948871-c6b3-456e-8d74-5e91b3c96283"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "join room 3",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9093/quizAPI/joinRoom/bb948871-c6b3-456e-8d74-5e91b3c96283",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9093",
+							"path": [
+								"quizAPI",
+								"joinRoom",
+								"bb948871-c6b3-456e-8d74-5e91b3c96283"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check participants",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8181/quizAPI/checkParticipants/bb948871-c6b3-456e-8d74-5e91b3c96283",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"quizAPI",
+								"checkParticipants",
+								"bb948871-c6b3-456e-8d74-5e91b3c96283"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get room questions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8181/quizAPI/getRoomQuestions/bb948871-c6b3-456e-8d74-5e91b3c96283",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"quizAPI",
+								"getRoomQuestions",
+								"bb948871-c6b3-456e-8d74-5e91b3c96283"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "start game",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJzYWkiLCJpYXQiOjE2OTMzMTA1MjMsImV4cCI6MTY5MzMxNDEyMywibmFtZSI6InNhaSIsInJvbGUiOiJQTEFZRVIifQ.3Ranww4Drz5wH7rjlEF72sHVeBFU8fd97-vAwTTsTFGVpVVX3hdc56hjyENuDqlwSkdgLdxQxItaJo-SeKcWjg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8181/quizAPI/checkParticipants/393b9f75-6a98-4a14-bfe3-258b5a5be697",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"quizAPI",
+								"checkParticipants",
+								"393b9f75-6a98-4a14-bfe3-258b5a5be697"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "submit room answers",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"questionID\":52 ,\r\n        \"correctOption\":\"svp\"\r\n    },\r\n    {\r\n        \"questionID\":53 ,\r\n        \"correctOption\":\"almost 150\"\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9093/quizAPI/submit/393b9f75-6a98-4a14-bfe3-258b5a5be697",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9093",
+							"path": [
+								"quizAPI",
+								"submit",
+								"393b9f75-6a98-4a14-bfe3-258b5a5be697"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "submit room answers Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"questionID\":52 ,\r\n        \"correctOption\":\"svp\"\r\n    },\r\n    {\r\n        \"questionID\":53 ,\r\n        \"correctOption\":\"almost 150\"\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9093/quizAPI/submit/393b9f75-6a98-4a14-bfe3-258b5a5be697",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9093",
+							"path": [
+								"quizAPI",
+								"submit",
+								"393b9f75-6a98-4a14-bfe3-258b5a5be697"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "submit room answers Copy 2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"questionID\":52 ,\r\n        \"correctOption\":\"svp\"\r\n    },\r\n    {\r\n        \"questionID\":53 ,\r\n        \"correctOption\":\"almost 150\"\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9093/quizAPI/submit/393b9f75-6a98-4a14-bfe3-258b5a5be697",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9093",
+							"path": [
+								"quizAPI",
+								"submit",
+								"393b9f75-6a98-4a14-bfe3-258b5a5be697"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "leader-board",
+			"item": [
+				{
+					"name": "room leader board room",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJuYXZlZW4iLCJpYXQiOjE2OTMzMTAxNTEsImV4cCI6MTY5MzMxMzc1MSwibmFtZSI6Im5hdmVlbiIsInJvbGUiOiJQTEFZRVIifQ.CZor8JqWHUaLYGUd8_MnP2jdIxj8oh7CciTMLeqbpBcox9WUVFl6-VUeqEa1aYUn-2aPgUIz0O0FziD9kghZow",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8181/leaderboard/history/393b9f75-6a98-4a14-bfe3-258b5a5be697",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"leaderboard",
+								"history",
+								"393b9f75-6a98-4a14-bfe3-258b5a5be697"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "room leader board player",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJuYXZlZW4iLCJpYXQiOjE2OTMzMTAxNTEsImV4cCI6MTY5MzMxMzc1MSwibmFtZSI6Im5hdmVlbiIsInJvbGUiOiJQTEFZRVIifQ.CZor8JqWHUaLYGUd8_MnP2jdIxj8oh7CciTMLeqbpBcox9WUVFl6-VUeqEa1aYUn-2aPgUIz0O0FziD9kghZow",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8181/leaderboard/history/393b9f75-6a98-4a14-bfe3-258b5a5be697",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"leaderboard",
+								"history",
+								"393b9f75-6a98-4a14-bfe3-258b5a5be697"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "micro-service-stack",
+			"item": []
+		}
+	]
+}
