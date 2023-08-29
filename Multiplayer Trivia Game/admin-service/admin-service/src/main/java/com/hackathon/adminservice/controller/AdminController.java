@@ -79,7 +79,7 @@ public class AdminController {
 	@Autowired
 	private Job job;
 
-	private static final String TEMP_STORAGE="C:/Users/LALITHASUNKARA/OneDrive - Virtusa/Desktop/batch-files/";
+	private static final String TEMP_STORAGE="C:/Users/saiejjipurapu/Downloads";
 
 	@PostMapping("/importGame")
 	public void importCsvToDBJob(@RequestParam("file") MultipartFile multipartFile) throws IllegalStateException, IOException {
@@ -99,11 +99,22 @@ public class AdminController {
 
 	}
 
-	@Value("$msg")
+	@Value("${msg}")
 	String msg;
+
+	@GetMapping("configCheck")
 	public String getMsg()
 	{
 		return msg;
+	}
+
+	@Value("${buurefersh}")
+	String busMsg;
+
+	@GetMapping("busRefresh")
+	public String getbusRefreshMsg()
+	{
+		return busMsg;
 	}
 
 

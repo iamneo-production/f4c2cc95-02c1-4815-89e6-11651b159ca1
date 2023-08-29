@@ -11,7 +11,8 @@ import com.hackathon.gameplaymechanicsservice.repository.ScoreEntityRepo;
 import com.hackathon.gameplaymechanicsservice.repository.SinglePlayerEntityRepo;
  import com.hackathon.gameplaymechanicsservice.request.QuestionsRequest;
 import com.hackathon.gameplaymechanicsservice.response.Question1;
- import org.springframework.beans.factory.annotation.Autowired;
+import com.hackathon.gameplaymechanicsservice.response.QuestonResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -187,7 +188,7 @@ public class RoomService {
     @Autowired
     private SinglePlayerEntityRepo singlePlayerEntityRepo;
 
-    public List<Question1> startGame(QuestionsRequest questionsRequest,String token) {
+    public  QuestonResponse startGame(QuestionsRequest questionsRequest, String token) {
 
         //get user id from feign client
 
@@ -201,7 +202,7 @@ public class RoomService {
         singlePlayerEntity.setNoOfQuestions(questionsRequest.getNoOFQuestions());
         singlePlayerEntity.setStartTime(new Date());
 
-        singlePlayerEntityRepo.save(singlePlayerEntity);
+         SinglePlayerEntity singlePlayer = singlePlayerEntityRepo.save(singlePlayerEntity);
 
 
 
@@ -212,7 +213,12 @@ public class RoomService {
         );
 
         Collections.shuffle(questions);
-        return questions;
+
+        String str = "your game id is :"+singlePlayer.getgameID();
+        QuestonResponse response = new QuestonResponse();
+        response.setQue(questions);
+        response.setGameIDReponse(str);
+        return response;
 
 
     }

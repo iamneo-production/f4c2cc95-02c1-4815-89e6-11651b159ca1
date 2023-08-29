@@ -5,6 +5,7 @@ import java.io.File;
 
 import com.hackathon.adminservice.entity.Question;
 import com.hackathon.adminservice.repo.AdminRepository;
+import com.hackathon.adminservice.serviceimpl.MyTasklet;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.JobRegistry;
@@ -114,8 +115,7 @@ public class SpringBatchConfig {
         return new MyTasklet();
     }
 
-    @Autowired
-    public Tasklet tasklet;
+
 
     @Bean
     public Step myStep(JobRepository jobRepository, Tasklet myTasklet, PlatformTransactionManager transactionManager) {
@@ -130,6 +130,8 @@ public class SpringBatchConfig {
 //        return jobRegistry.getJob("importCustomers");
 //                //jobBuilderFactory.get("importCustomers").flow(step1(reader)).end().build();
 //    }
+
+
 
 
 

@@ -8,6 +8,7 @@ import com.hackathon.gameplaymechanicsservice.repository.SinglePlayerEntityRepo;
 import com.hackathon.gameplaymechanicsservice.request.QuestionsRequest;
  import com.hackathon.gameplaymechanicsservice.response.PlayerAnswerResponse;
 import com.hackathon.gameplaymechanicsservice.response.Question1;
+import com.hackathon.gameplaymechanicsservice.response.QuestonResponse;
 import com.hackathon.gameplaymechanicsservice.service.FeignService;
 import com.hackathon.gameplaymechanicsservice.service.RoomService;
 import com.hackathon.gameplaymechanicsservice.service.ScoreService;
@@ -69,7 +70,7 @@ public class GamePlayController {
     }
 
     @PostMapping("/startSinglePlayerGame")
-    public List<Question1> startGame(@RequestBody QuestionsRequest questionsRequest,@RequestHeader(name = "Authorization") String tokenDup) {
+    public QuestonResponse startGame(@RequestBody QuestionsRequest questionsRequest, @RequestHeader(name = "Authorization") String tokenDup) {
         return roomService.startGame(questionsRequest,tokenDup);
     }
 
