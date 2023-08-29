@@ -14,6 +14,8 @@ import com.hackathon.gameplaymechanicsservice.service.ScoreService;
  import org.springframework.beans.factory.annotation.Autowired;
  import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.core.env.Environment;
+
 
  import java.util.LinkedList;
 import java.util.List;
@@ -28,6 +30,14 @@ public class GamePlayController {
 
     @Autowired
     private ScoreService scoreService;
+    
+    @Autowired 
+	Environment env;
+	// http://localhost:8181/quizAPI/loadBalancedDemo run 2 instances
+	@GetMapping("/loadBalancedDemo")
+	public String loadBalancedDemo() {
+		return "Gameplay-Mechanics-Service running on port : "+env.getProperty("local.server.port", Integer.class);
+		}
 
     @PostMapping("/createRoom")
     private ResponseEntity<String> createRoom(@RequestBody RoomsEntity roomsEntity,@RequestHeader(name = "Authorization") String tokenDup) {

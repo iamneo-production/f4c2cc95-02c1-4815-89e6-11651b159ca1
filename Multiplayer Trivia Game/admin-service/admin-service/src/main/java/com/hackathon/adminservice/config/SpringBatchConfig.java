@@ -109,10 +109,10 @@ public class SpringBatchConfig {
                 .build();
     }
 
-    @Bean
-    public Tasklet myTasklet() {
-        return new MyTasklet();
-    }
+//    @Bean
+//    public Tasklet myTasklet() {
+//        return new MyTasklet();
+//    }
 
     @Autowired
     public Tasklet tasklet;

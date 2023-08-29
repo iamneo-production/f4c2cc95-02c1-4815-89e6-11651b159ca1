@@ -97,8 +97,21 @@ public class SinglePlayerEntity implements Comparable<SinglePlayerEntity>{
                 ", score=" + score +
                 '}';
     }
+    public SinglePlayerEntity() {}
+    public SinglePlayerEntity(int gameID, int userID, String cateogry, String level, int noOfQuestions, Date startTime,
+			Date endTime, int score) {
+		super();
+		this.gameID = gameID;
+		this.userID = userID;
+		this.cateogry = cateogry;
+		this.level = level;
+		this.noOfQuestions = noOfQuestions;
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.score = score;
+	}
 
-    @Override
+	@Override
     public int compareTo(SinglePlayerEntity other) {
         return Integer.compare(other.getScore(), this.score);
     }
